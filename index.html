@@ -25,20 +25,23 @@
   .sub, .note { color: var(--muted); font-size: 0.85rem; margin: 0; }
   .sub { margin-top: 4px; }
   section { display: grid; gap: 12px; }
-  .tiles { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr)); }
+  .tiles { display: grid; gap: 12px; grid-template-columns: repeat(2, 1fr); }
+  @media (min-width: 1000px) { .tiles { grid-template-columns: repeat(4, 1fr); } }
+  .nw { white-space: nowrap; }
+  @media (max-width: 1000px) { .minor { display: none !important; } }
   .card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 20px; display: grid; gap: 8px; align-content: start; min-width: 0; }
   .label { color: var(--muted); font-size: 0.85rem; }
   .big { font-family: var(--serif); font-size: 2.2rem; line-height: 1.1; font-variant-numeric: tabular-nums; }
-  .grid2 { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr)); }
+  .grid2 { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 480px), 1fr)); }
   .scroll { overflow: auto; }
   .scroll.tall { max-height: 520px; }
   table { width: 100%; border-collapse: collapse; font-size: 0.85rem; font-variant-numeric: tabular-nums; }
   th { text-align: left; font-weight: 600; color: var(--muted); padding: 6px 8px; border-bottom: 1px solid var(--line); position: sticky; top: 0; background: var(--panel); white-space: nowrap; }
   td { padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
   .num { text-align: right; }
-  td:first-child { white-space: nowrap; }
+  td:first-child:not(.ex) { white-space: nowrap; }
   .ex { font-weight: 600; }
-  .wide { min-width: 220px; }
+  .wide { min-width: 180px; }
   .up { color: var(--ok); font-weight: 600; }
   .down { color: var(--warn); font-weight: 600; }
   .same { color: var(--muted); }
@@ -46,9 +49,52 @@
   tr.prrow td { background: color-mix(in srgb, #f2c94c 18%, transparent); }
   details > summary { cursor: pointer; font-weight: 600; font-size: 1.05rem; }
   details[open] > summary { margin-bottom: 12px; }
-  .detail { display: grid; gap: 12px; }
+  .detail { display: grid; gap: 12px; min-width: 0; }
+  .detail > * { min-width: 0; }
   input[type=search] { font: inherit; font-size: 0.85rem; padding: 6px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--fg); width: min(100%, 320px); }
   footer { color: var(--muted); font-size: 0.8rem; }
+
+  /* Phones and tablets: each table row becomes a small stacked card */
+  @media (max-width: 760px) {
+    .stack thead { display: none; }
+    .stack, .stack tbody, .stack tr, .stack td { display: block; width: 100%; }
+    .stack tr { border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; margin-bottom: 8px; }
+    .stack td { border: 0; padding: 3px 0; display: flex; justify-content: space-between; gap: 12px; text-align: right; white-space: normal; min-width: 0; }
+    .stack td::before { content: attr(data-label); color: var(--muted); text-align: left; flex: 0 0 auto; max-width: 45%; }
+    .stack td:first-child { display: block; text-align: left; font-weight: 600; font-size: 0.95rem; padding-bottom: 6px; margin-bottom: 4px; border-bottom: 1px solid var(--line); }
+    .stack td:first-child::before { content: none; }
+    .stack td:empty { display: none; }
+    .stack td.wide { display: block; text-align: left; }
+    .stack td.wide::before { display: block; max-width: none; margin-bottom: 2px; }
+    .stack tr.prrow td { background: none; }
+    .stack tr.prrow { background: color-mix(in srgb, #f2c94c 18%, transparent); }
+    .scroll, .scroll.tall { overflow: visible; max-height: none; }
+  }
+  @media (max-width: 1000px) {
+    .stack-wide thead { display: none; }
+    .stack-wide, .stack-wide tbody, .stack-wide tr, .stack-wide td { display: block; width: 100%; }
+    .stack-wide tr { border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; margin-bottom: 8px; }
+    .stack-wide td { border: 0; padding: 3px 0; display: flex; justify-content: space-between; gap: 12px; text-align: right; white-space: normal; min-width: 0; }
+    .stack-wide td::before { content: attr(data-label); color: var(--muted); text-align: left; flex: 0 0 auto; max-width: 45%; }
+    .stack-wide td:first-child { display: block; text-align: left; font-weight: 600; font-size: 0.95rem; padding-bottom: 6px; margin-bottom: 4px; border-bottom: 1px solid var(--line); }
+    .stack-wide td:first-child::before { content: none; }
+    .stack-wide td:empty { display: none; }
+    .stack-wide td.wide { display: block; text-align: left; }
+    .stack-wide td.wide::before { display: block; max-width: none; margin-bottom: 2px; }
+    .stack-wide tr.prrow td { background: none; }
+    .stack-wide tr.prrow { background: color-mix(in srgb, #f2c94c 18%, transparent); }
+    .scroll.tall { overflow: visible; max-height: none; }
+  }
+  @media (max-width: 600px) {
+    .wrap { padding: 20px 12px 48px; gap: 24px; }
+    h1 { font-size: 1.6rem; }
+    .lede { font-size: 1rem; }
+    .card { padding: 14px; }
+    .tiles { grid-template-columns: 1fr 1fr; gap: 8px; }
+    .big { font-size: 1.8rem; }
+    input[type=search] { width: 100%; font-size: 16px; }
+    .stack td.minor { display: none; }
+  }
 </style>
 </head>
 <body>
@@ -73,8 +119,8 @@
     <div class="card">
       <h2>Strength lifts: start of stage 2 vs latest</h2>
       <p class="note">Top set = heaviest weight done for at least the bottom of the rep range. Assisted chin-up shows the machine's assistance, so lower is better.</p>
-      <div class="scroll"><table>
-        <thead><tr><th>Exercise</th><th>Day</th><th>Stage 2 start</th><th>Latest</th><th>Change</th><th>Best ever</th><th class="num">Times</th></tr></thead>
+      <div class="scroll"><table class="stack">
+        <thead><tr><th>Exercise</th><th>Day</th><th>Stage 2 start</th><th>Latest</th><th>Change</th><th>Best ever</th><th class="num minor">Times</th></tr></thead>
         <tbody id="lifts"></tbody>
       </table></div>
     </div>
@@ -84,15 +130,15 @@
     <div class="card">
       <h2>Light days and conditioning</h2>
       <p class="note">Most of these have been done once or twice, so latest and best are often the same.</p>
-      <div class="scroll"><table>
-        <thead><tr><th>Exercise</th><th>Latest</th><th>Best ever</th><th class="num">Times</th></tr></thead>
+      <div class="scroll"><table class="stack">
+        <thead><tr><th>Exercise</th><th>Latest</th><th>Best ever</th><th class="num minor">Times</th></tr></thead>
         <tbody id="light"></tbody>
       </table></div>
     </div>
     <div class="card">
       <h2>Rower</h2>
       <p class="note">Easy rows on light days; intervals on Conditioning &amp; Core. Hard-minute watts aren't recorded yet.</p>
-      <div class="scroll"><table>
+      <div class="scroll"><table class="stack">
         <thead><tr><th>Date</th><th>Type</th><th class="num">Time</th><th class="num">Metres</th><th class="num">Avg W</th><th>PR</th></tr></thead>
         <tbody id="rower"></tbody>
       </table></div>
@@ -103,7 +149,7 @@
     <div class="card">
       <h2>Recent PRs</h2>
       <p class="note">The ten most recent; the full list is in the log below.</p>
-      <div class="scroll"><table>
+      <div class="scroll"><table class="stack">
         <thead><tr><th>Date</th><th>Exercise</th><th>PR</th><th>Result</th></tr></thead>
         <tbody id="prs"></tbody>
       </table></div>
@@ -111,7 +157,7 @@
     <div class="card">
       <h2>Flags and notes</h2>
       <p class="note">Injuries, shortened sessions and anything that explains an odd number.</p>
-      <div class="scroll"><table>
+      <div class="scroll"><table class="stack">
         <thead><tr><th>Date</th><th>Note</th></tr></thead>
         <tbody id="flags"></tbody>
       </table></div>
@@ -123,13 +169,13 @@
     <div class="detail">
       <h2>Sessions</h2>
       <p class="note">One row per gym day, newest first. Volume is reps x weight across all sets; carries, holds and assisted chin-ups are left out.</p>
-      <div class="scroll tall"><table>
+      <div class="scroll tall"><table class="stack stack-wide">
         <thead><tr><th>Date</th><th>Day</th><th class="num">Session</th><th class="num">Volume (kg)</th><th class="num">PRs</th><th class="num">Days since last strength</th><th>Notes</th></tr></thead>
         <tbody id="sessions"></tbody>
       </table></div>
       <h2>Every exercise</h2>
       <input type="search" id="search" placeholder="Search exercise, day or note" aria-label="Search every exercise">
-      <div class="scroll tall"><table>
+      <div class="scroll tall"><table class="stack stack-wide">
         <thead><tr><th>Date</th><th>Day</th><th>Exercise</th><th>Sets (reps x kg)</th><th class="num">Top set</th><th class="num">Reps</th><th class="num">Time (s)</th><th class="num">Volume</th><th>PR</th><th>Notes</th></tr></thead>
         <tbody id="log"></tbody>
       </table></div>
@@ -149,6 +195,10 @@
   const row = (cells, cls) => { const tr = document.createElement('tr'); if (cls) tr.className = cls; tr.append(...cells); return tr; };
   const b = (t) => { const e = document.createElement('b'); e.textContent = t; return e; };
   const text = (t) => document.createTextNode(t);
+  const label = (tb) => {
+    const heads = [...tb.closest('table').querySelectorAll('thead th')].map((t) => t.textContent);
+    tb.querySelectorAll('tr').forEach((tr) => [...tr.children].forEach((c, i) => { c.dataset.label = heads[i] || ''; }));
+  };
 
   const weeks = S.stage2_days / 7;
   const strength = D.lifts.filter((l) => l.section === 'Strength');
@@ -168,9 +218,9 @@
   $('t-other-note').textContent = 'Target 3: ' + S.light_days + ' light days and ' + S.conditioning_days + ' Conditioning & Core so far';
   $('t-prs').textContent = prsS2;
 
-  $('lifts').append(...strength.map((r) => row([td(r.exercise, 'ex'), td(r.day), td(r.start), td(r.latest),
-    td(r.change, r.direction === 'up' ? 'up' : r.direction === 'down' ? 'down' : 'same'), td(r.best), td(r.times_in_stage_2, 'num')])));
-  $('light').append(...D.lifts.filter((l) => l.section !== 'Strength').map((r) => row([td(r.exercise, 'ex'), td(r.latest), td(r.best), td(r.times_in_stage_2, 'num')])));
+  $('lifts').append(...strength.map((r) => row([td(r.exercise, 'ex'), td(r.day.replace('Strength ', ''), 'nw'), td(r.start, 'nw'), td(r.latest, 'nw'),
+    td(r.change, r.direction === 'up' ? 'up' : r.direction === 'down' ? 'down' : 'same'), td(r.best, 'nw'), td(r.times_in_stage_2, 'num minor')])));
+  $('light').append(...D.lifts.filter((l) => l.section !== 'Strength').map((r) => row([td(r.exercise, 'ex'), td(r.latest), td(r.best), td(r.times_in_stage_2, 'num minor')])));
   $('rower').append(...D.cardio.filter((r) => r.type.startsWith('Row')).slice().reverse().map((r) => row([td(r.date),
     td(r.type.replace('Row ', '').replace(/[()]/g, '')), td(r.duration, 'num'), td(r.distance === '' ? '' : fmt(r.distance), 'num'), td(r.watts, 'num'), td(r.pr, r.pr ? 'pr' : '')])));
   $('prs').append(...D.prs.slice(0, 10).map((r) => row([td(r.date), td(r.exercise, 'ex'), td(r.pr_type), td(r.result)])));
@@ -184,8 +234,10 @@
     $('log').replaceChildren(...list.map((r) => row([td(r.date), td(r.day), td(r.exercise, 'ex'), td(r.sets),
       td(r.top === '' ? '' : (r.top === 0 ? 'BW' : r.top), 'num'), td(r.reps, 'num'), td(r.time, 'num'),
       td(r.volume ? fmt(r.volume) : '', 'num'), td(r.pr, r.pr ? 'pr' : ''), td(r.notes, 'wide')], r.pr ? 'prrow' : '')));
+    label($('log'));
   };
   drawLog('');
+  ['lifts', 'light', 'rower', 'prs', 'flags', 'sessions'].forEach((id) => label($(id)));
   $('search').addEventListener('input', (e) => drawLog(e.target.value.trim().toLowerCase()));
 </script>
 </body>
