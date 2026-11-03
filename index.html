@@ -71,7 +71,7 @@
   details.card > summary::-webkit-details-marker { display: none; }
   details.card > summary::after { content: "Show"; color: var(--muted); font-weight: 400; font-size: 0.85rem; }
   details.card[open] > summary::after { content: "Hide"; }
-  .detail { display: grid; gap: 14px; margin-top: 8px; min-width: 0; }
+  .detail { display: grid; gap: 12px; margin-top: 10px; min-width: 0; }
   .scroll { max-height: 520px; overflow: auto; }
   input[type=search] { font: inherit; font-size: 16px; padding: 7px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--fg); width: min(100%, 320px); }
   footer { color: var(--muted); font-size: 0.8rem; }
@@ -116,49 +116,53 @@
     </div>
   </section>
 
-  <section>
-    <div class="card">
-      <div class="card-head">
-        <h2>Strength lifts</h2>
-        <p class="note">Top set = heaviest weight done for at least the bottom of the rep range. Assisted chin-up shows the machine's help, so lower is better.</p>
-      </div>
+  <details class="card" open>
+    <summary>Strength lifts</summary>
+    <div class="detail">
+      <p class="note">Top set = heaviest weight done for at least the bottom of the rep range. Assisted chin-up shows the machine's help, so lower is better.</p>
       <table>
         <thead><tr><th>Exercise</th><th>Stage 2 start</th><th>Now</th><th>Change</th><th>Best ever</th><th class="num hide-tab">Sessions</th></tr></thead>
         <tbody id="lifts-t"></tbody>
       </table>
       <div class="list" id="lifts-l"></div>
     </div>
-  </section>
+  </details>
 
-  <section>
-    <div class="card">
-      <div class="card-head"><h2>Recent PRs</h2><p class="note">The ten most recent. The full list is in the log.</p></div>
+  <details class="card" open>
+    <summary>Recent PRs</summary>
+    <div class="detail">
+      <p class="note">The ten most recent. The full list is in the log.</p>
       <table>
         <thead><tr><th>Date</th><th>Exercise</th><th>Result</th><th>PR</th></tr></thead>
         <tbody id="prs-t"></tbody>
       </table>
       <div class="list" id="prs-l"></div>
     </div>
-  </section>
+  </details>
 
-  <div class="grid2">
-    <div class="card">
-      <div class="card-head"><h2>Light days and conditioning</h2><p class="note">Most have been done once or twice so far.</p></div>
+  <details class="card">
+    <summary>Light days and conditioning</summary>
+    <div class="detail">
+      <p class="note">Most have been done once or twice so far.</p>
       <table>
         <thead><tr><th>Exercise</th><th>Latest</th><th>Best ever</th></tr></thead>
         <tbody id="light-t"></tbody>
       </table>
       <div class="list" id="light-l"></div>
     </div>
-    <div class="card">
-      <div class="card-head"><h2>Rower</h2><p class="note">Easy rows have run 5 to 20 minutes, so watts are a rough guide. Interval rows show rounds, since watts for the hard minutes aren't recorded yet.</p></div>
+  </details>
+
+  <details class="card">
+    <summary>Rower</summary>
+    <div class="detail">
+      <p class="note">Easy rows have run 5 to 20 minutes, so watts are a rough guide. Interval rows show rounds, since watts for the hard minutes aren't recorded yet.</p>
       <table>
         <thead><tr><th>Date</th><th>Type</th><th class="num">Time</th><th class="num">Metres</th><th class="num">Avg W</th><th>PR</th></tr></thead>
         <tbody id="rower-t"></tbody>
       </table>
       <div class="list" id="rower-l"></div>
     </div>
-  </div>
+  </details>
 
   <details class="card">
     <summary>Flags and notes</summary>
